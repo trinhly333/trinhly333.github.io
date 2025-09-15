@@ -1,0 +1,388 @@
+classDiagram
+    %% Authentication & User Management
+    class User {
+        +id: string
+        +email: string
+        +role: UserRole
+        +created_at: Date
+        +updated_at: Date
+        +profile: UserProfile
+        +authenticate(email: string, password: string) Promise~AuthResult~
+        +logout() Promise~void~
+        +updateProfile(data: ProfileData) Promise~User~
+    }
+
+    class UserProfile {
+        +user_id: string
+        +full_name: string
+        +phone: string
+        +avatar_url: string
+        +preferences: UserPreferences
+        +created_at: Date
+        +updated_at: Date
+    }
+
+    class AuthService {
+        +signIn(email: string, password: string) Promise~AuthResult~
+        +signUp(email: string, password: string) Promise~AuthResult~
+        +signOut() Promise~void~
+        +getCurrentUser() Promise~User~
+        +resetPassword(email: string) Promise~void~
+        +verifyOTP(token: string) Promise~boolean~
+    }
+
+    %% Product Management
+    class Product {
+        +id: string
+        +name: string
+        +slug: string
+        +description: string
+        +price: number
+        +original_price: number
+        +thumbnail_url: string
+        +video_url: string
+        +gallery_urls: string[]
+        +addons: ProductAddon[]
+        +categories: Category[]
+        +is_featured: boolean
+        +status: ProductStatus
+        +created_at: Date
+        +updated_at: Date
+        +calculatePrice(selectedAddons: string[]) number
+        +getDiscountPercentage() number
+        +isAvailable() boolean
+    }
+
+    class ProductAddon {
+        +id: string
+        +product_id: string
+        +name: string
+        +description: string
+        +price: number
+        +is_required: boolean
+        +display_order: number
+    }
+
+    class Category {
+        +id: string
+        +name: string
+        +slug: string
+        +description: string
+        +image_url: string
+        +parent_id: string
+        +display_order: number
+        +is_active: boolean
+    }
+
+    class ProductService {
+        +getAllProducts(filters: ProductFilters) Promise~Product[]~
+        +getProductBySlug(slug: string) Promise~Product~
+        +searchProducts(query: string) Promise~Product[]~
+        +getFeaturedProducts() Promise~Product[]~
+        +getProductsByCategory(categoryId: string) Promise~Product[]~
+        +createProduct(data: CreateProductData) Promise~Product~
+        +updateProduct(id: string, data: UpdateProductData) Promise~Product~
+        +deleteProduct(id: string) Promise~void~
+    }
+
+    %% Shopping Cart & Orders
+    class CartItem {
+        +product_id: string
+        +product: Product
+        +quantity: number
+        +selected_addons: string[]
+        +unit_price: number
+        +total_price: number
+        +calculateTotal() number
+        +updateQuantity(qty: number) void
+    }
+
+    class ShoppingCart {
+        +id: string
+        +session_id: string
+        +items: CartItem[]
+        +subtotal: number
+        +discount_amount: number
+        +shipping_fee: number
+        +total_amount: number
+        +addItem(productId: string, addons: string[]) void
+        +removeItem(productId: string) void
+        +updateItemQuantity(productId: string, quantity: number) void
+        +applyDiscount(couponCode: string) Promise~void~
+        +calculateTotals() void
+        +clear() void
+    }
+
+    class Order {
+        +id: string
+        +order_number: string
+        +customer_id: string
+        +customer_email: string
+        +customer_name: string
+        +items: OrderItem[]
+        +subtotal: number
+        +discount_amount: number
+        +shipping_fee: number
+        +total_amount: number
+        +payment_method: PaymentMethod
+        +payment_status: PaymentStatus
+        +order_status: OrderStatus
+        +created_at: Date
+        +updated_at: Date
+        +generateOrderNumber() string
+        +updatePaymentStatus(status: PaymentStatus) Promise~void~
+        +fulfillOrder() Promise~void~
+    }
+
+    class OrderItem {
+        +id: string
+        +order_id: string
+        +product_id: string
+        +product_name: string
+        +product_thumbnail: string
+        +quantity: number
+        +unit_price: number
+        +selected_addons: OrderItemAddon[]
+        +total_price: number
+    }
+
+    class OrderItemAddon {
+        +id: string
+        +order_item_id: string
+        +addon_name: string
+        +addon_price: number
+    }
+
+    class OrderService {
+        +createOrder(cartData: CartData, customerData: CustomerData) Promise~Order~
+        +getOrderById(id: string) Promise~Order~
+        +getOrdersByCustomer(customerId: string) Promise~Order[]~
+        +updateOrderStatus(orderId: string, status: OrderStatus) Promise~void~
+        +processPayment(orderId: string, paymentData: PaymentData) Promise~PaymentResult~
+        +sendOrderConfirmation(orderId: string) Promise~void~
+    }
+
+    %% Payment Processing
+    class PaymentProvider {
+        <<interface>>
+        +name: string
+        +createPayment(order: Order) Promise~PaymentResult~
+        +verifyPayment(transactionId: string) Promise~PaymentVerification~
+        +processWebhook(payload: any) Promise~WebhookResult~
+        +refundPayment(transactionId: string, amount: number) Promise~RefundResult~
+    }
+
+    class VietQRProvider {
+        +bank_code: string
+        +account_number: string
+        +createPayment(order: Order) Promise~PaymentResult~
+        +generateQRCode(order: Order) Promise~string~
+        +verifyPayment(transactionId: string) Promise~PaymentVerification~
+        +processWebhook(payload: any) Promise~WebhookResult~
+    }
+
+    class MomoProvider {
+        +partner_code: string
+        +access_key: string
+        +createPayment(order: Order) Promise~PaymentResult~
+        +verifyPayment(transactionId: string) Promise~PaymentVerification~
+        +processWebhook(payload: any) Promise~WebhookResult~
+    }
+
+    class ZaloPayProvider {
+        +app_id: string
+        +key1: string
+        +key2: string
+        +createPayment(order: Order) Promise~PaymentResult~
+        +verifyPayment(transactionId: string) Promise~PaymentVerification~
+        +processWebhook(payload: any) Promise~WebhookResult~
+    }
+
+    class PaymentService {
+        +providers: PaymentProvider[]
+        +processPayment(orderId: string, method: PaymentMethod) Promise~PaymentResult~
+        +verifyPaymentCallback(provider: string, data: any) Promise~boolean~
+        +handleWebhook(provider: string, payload: any) Promise~void~
+        +getPaymentStatus(transactionId: string) Promise~PaymentStatus~
+    }
+
+    %% Admin Dashboard
+    class AdminDashboard {
+        +getCurrentMetrics() Promise~DashboardMetrics~
+        +getRecentOrders() Promise~Order[]~
+        +getSalesAnalytics(period: DateRange) Promise~SalesData~
+        +getTopProducts() Promise~ProductSales[]~
+    }
+
+    class AdminProductManager {
+        +createProduct(data: ProductFormData) Promise~Product~
+        +updateProduct(id: string, data: ProductFormData) Promise~Product~
+        +deleteProduct(id: string) Promise~void~
+        +bulkUpdateProducts(updates: ProductUpdate[]) Promise~void~
+        +importProducts(csvData: string) Promise~ImportResult~
+    }
+
+    class AdminCustomerManager {
+        +getCustomers(filters: CustomerFilters) Promise~Customer[]~
+        +getCustomerDetails(id: string) Promise~CustomerDetails~
+        +updateCustomerStatus(id: string, status: CustomerStatus) Promise~void~
+        +exportCustomerData() Promise~string~
+    }
+
+    class AdminSettingsManager {
+        +getSiteSettings() Promise~SiteSettings~
+        +updateSiteSettings(data: SettingsData) Promise~SiteSettings~
+        +updateLogo(logoUrl: string) Promise~void~
+        +updateFavicon(faviconUrl: string) Promise~void~
+        +managePaymentMethods(methods: PaymentMethodConfig[]) Promise~void~
+    }
+
+    %% Campaign Management
+    class Campaign {
+        +id: string
+        +name: string
+        +type: CampaignType
+        +discount_type: DiscountType
+        +discount_value: number
+        +min_order_amount: number
+        +usage_limit: number
+        +usage_count: number
+        +start_date: Date
+        +end_date: Date
+        +is_active: boolean
+        +applicable_products: string[]
+        +isValid(order: Order) boolean
+        +calculateDiscount(orderAmount: number) number
+    }
+
+    class CouponCode {
+        +id: string
+        +code: string
+        +campaign_id: string
+        +usage_limit: number
+        +usage_count: number
+        +is_active: boolean
+        +expires_at: Date
+        +isValid() boolean
+    }
+
+    class CampaignService {
+        +createCampaign(data: CampaignData) Promise~Campaign~
+        +updateCampaign(id: string, data: CampaignData) Promise~Campaign~
+        +deleteCampaign(id: string) Promise~void~
+        +validateCoupon(code: string, order: Order) Promise~CouponValidation~
+        +applyCoupon(code: string, order: Order) Promise~DiscountResult~
+        +getCampaignAnalytics(campaignId: string) Promise~CampaignAnalytics~
+    }
+
+    %% Site Settings & Configuration
+    class SiteSettings {
+        +id: string
+        +site_name: string
+        +logo_url: string
+        +favicon_url: string
+        +contact_email: string
+        +facebook_group_url: string
+        +payment_methods: PaymentMethodConfig[]
+        +email_settings: EmailSettings
+        +seo_settings: SEOSettings
+        +created_at: Date
+        +updated_at: Date
+    }
+
+    class EmailSettings {
+        +smtp_host: string
+        +smtp_port: number
+        +smtp_username: string
+        +from_email: string
+        +from_name: string
+        +welcome_template: string
+        +order_confirmation_template: string
+    }
+
+    %% Email Automation
+    class EmailService {
+        +sendWelcomeEmail(customer: Customer) Promise~void~
+        +sendOrderConfirmation(order: Order) Promise~void~
+        +sendProductTips(customer: Customer, product: Product) Promise~void~
+        +sendCrossSellEmail(customer: Customer, products: Product[]) Promise~void~
+        +sendCommunityInvite(customer: Customer) Promise~void~
+        +scheduleEmailSequence(trigger: EmailTrigger, customer: Customer) Promise~void~
+    }
+
+    class EmailTemplate {
+        +id: string
+        +name: string
+        +subject: string
+        +html_content: string
+        +text_content: string
+        +variables: TemplateVariable[]
+        +render(data: EmailData) string
+    }
+
+    class EmailAutomation {
+        +trigger: EmailTrigger
+        +delay_hours: number
+        +template_id: string
+        +conditions: AutomationCondition[]
+        +isEligible(customer: Customer, context: any) boolean
+        +execute(customer: Customer, context: any) Promise~void~
+    }
+
+    %% API Controllers
+    class ProductController {
+        +getProducts(req: Request) Promise~Response~
+        +getProduct(req: Request) Promise~Response~
+        +searchProducts(req: Request) Promise~Response~
+        +createProduct(req: Request) Promise~Response~
+        +updateProduct(req: Request) Promise~Response~
+        +deleteProduct(req: Request) Promise~Response~
+    }
+
+    class OrderController {
+        +createOrder(req: Request) Promise~Response~
+        +getOrders(req: Request) Promise~Response~
+        +getOrder(req: Request) Promise~Response~
+        +updateOrderStatus(req: Request) Promise~Response~
+        +processPayment(req: Request) Promise~Response~
+    }
+
+    class WebhookController {
+        +handleVietQRWebhook(req: Request) Promise~Response~
+        +handleMomoWebhook(req: Request) Promise~Response~
+        +handleZaloPayWebhook(req: Request) Promise~Response~
+        +verifyWebhookSignature(provider: string, payload: any, signature: string) boolean
+    }
+
+    %% Relationships
+    User ||--|| UserProfile : has
+    User ||--o{ Order : places
+    
+    Product ||--o{ ProductAddon : has
+    Product }o--o{ Category : belongs_to
+    Product ||--o{ CartItem : in
+    Product ||--o{ OrderItem : ordered_as
+    
+    ShoppingCart ||--o{ CartItem : contains
+    Order ||--o{ OrderItem : contains
+    OrderItem ||--o{ OrderItemAddon : includes
+    
+    PaymentProvider <|-- VietQRProvider : implements
+    PaymentProvider <|-- MomoProvider : implements
+    PaymentProvider <|-- ZaloPayProvider : implements
+    
+    Campaign ||--o{ CouponCode : generates
+    Order }o--|| Campaign : applies
+    
+    SiteSettings ||--|| EmailSettings : includes
+    EmailTemplate ||--o{ EmailAutomation : used_in
+    
+    ProductService --> Product : manages
+    OrderService --> Order : handles
+    PaymentService --> PaymentProvider : uses
+    CampaignService --> Campaign : manages
+    EmailService --> EmailTemplate : uses
+    
+    ProductController --> ProductService : uses
+    OrderController --> OrderService : uses
+    WebhookController --> PaymentService : uses
