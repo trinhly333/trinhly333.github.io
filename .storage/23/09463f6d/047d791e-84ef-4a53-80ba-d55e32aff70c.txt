@@ -1,0 +1,2 @@
+$ find . -name "supabase" -type d
+./supabase

@@ -1,0 +1,24 @@
+$ find . -name "supabase" -type d
+./supabase
+$ find . -name "*.sql" -o -name "*supabase*" | head -20
+
+./node_modules/.pnpm/@supabase+auth-js@2.71.1
+./node_modules/.pnpm/@supabase+auth-js@2.71.1/node_modules/@supabase
+./node_modules/.pnpm/@supabase+supabase-js@2.57.4
+./node_modules/.pnpm/@supabase+supabase-js@2.57.4/node_modules/@supabase
+./node_modules/.pnpm/@supabase+supabase-js@2.57.4/node_modules/@supabase/supabase-js
+./node_modules/.pnpm/@supabase+supabase-js@2.57.4/node_modules/@supabase/supabase-js/dist/umd/supabase.js
+./node_modules/.pnpm/@supabase+node-fetch@2.6.15
+./node_modules/.pnpm/@supabase+node-fetch@2.6.15/node_modules/@supabase
+./node_modules/.pnpm/@supabase+functions-js@2.4.6
+./node_modules/.pnpm/@supabase+functions-js@2.4.6/node_modules/@supabase
+./node_modules/.pnpm/@supabase+postgrest-js@1.21.4
+./node_modules/.pnpm/@supabase+postgrest-js@1.21.4/node_modules/@supabase
+./node_modules/.pnpm/@supabase+realtime-js@2.15.5
+./node_modules/.pnpm/@supabase+realtime-js@2.15.5/node_modules/@supabase
+./node_modules/.pnpm/@supabase+storage-js@2.12.1
+./node_modules/.pnpm/@supabase+storage-js@2.12.1/node_modules/@supabase
+./node_modules/.pnpm/@supabase+storage-js@2.12.1/node_modules/@supabase/storage-js/dist/umd/supabase.js
+./node_modules/.pnpm/node_modules/@supabase
+./node_modules/@supabase
+./node_modules/@supabase/supabase-js
