@@ -1,0 +1,5 @@
+$ find src -name "*art*" -type f
+src/components/CartModal.tsx
+src/components/FlyingCartItem.tsx
+src/components/ui/chart.tsx
+src/hooks/useCart.ts

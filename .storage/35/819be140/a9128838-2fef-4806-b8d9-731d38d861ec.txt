@@ -1,0 +1,51 @@
+$ find . -name "*admin*" -type f
+$ find . -name "*Admin*" -type f
+
+./node_modules/.pnpm/@supabase+auth-js@2.71.1/node_modules/@supabase/auth-js/src/AuthAdminApi.ts
+./node_modules/.pnpm/@supabase+auth-js@2.71.1/node_modules/@supabase/auth-js/src/GoTrueAdminApi.ts
+./node_modules/.pnpm/@supabase+auth-js@2.71.1/node_modules/@supabase/auth-js/dist/main/AuthAdminApi.js
+./node_modules/.pnpm/@supabase+auth-js@2.71.1/node_modules/@supabase/auth-js/dist/main/GoTrueAdminApi.js
+./node_modules/.pnpm/@supabase+auth-js@2.71.1/node_modules/@supabase/auth-js/dist/main/AuthAdminApi.d.ts.map
+./node_modules/.pnpm/@supabase+auth-js@2.71.1/node_modules/@supabase/auth-js/dist/main/AuthAdminApi.js.map
+./node_modules/.pnpm/@supabase+auth-js@2.71.1/node_modules/@supabase/auth-js/dist/main/GoTrueAdminApi.d.ts.map
+./node_modules/.pnpm/@supabase+auth-js@2.71.1/node_modules/@supabase/auth-js/dist/main/GoTrueAdminApi.js.map
+./node_modules/.pnpm/@supabase+auth-js@2.71.1/node_modules/@supabase/auth-js/dist/main/AuthAdminApi.d.ts
+./node_modules/.pnpm/@supabase+auth-js@2.71.1/node_modules/@supabase/auth-js/dist/main/GoTrueAdminApi.d.ts
+./node_modules/.pnpm/@supabase+auth-js@2.71.1/node_modules/@supabase/auth-js/dist/module/AuthAdminApi.js
+./node_modules/.pnpm/@supabase+auth-js@2.71.1/node_modules/@supabase/auth-js/dist/module/GoTrueAdminApi.js
+./node_modules/.pnpm/@supabase+auth-js@2.71.1/node_modules/@supabase/auth-js/dist/module/AuthAdminApi.d.ts.map
+./node_modules/.pnpm/@supabase+auth-js@2.71.1/node_modules/@supabase/auth-js/dist/module/AuthAdminApi.js.map
+./node_modules/.pnpm/@supabase+auth-js@2.71.1/node_modules/@supabase/auth-js/dist/module/GoTrueAdminApi.d.ts.map
+./node_modules/.pnpm/@supabase+auth-js@2.71.1/node_modules/@supabase/auth-js/dist/module/GoTrueAdminApi.js.map
+./node_modules/.pnpm/@supabase+auth-js@2.71.1/node_modules/@supabase/auth-js/dist/module/AuthAdminApi.d.ts
+./node_modules/.pnpm/@supabase+auth-js@2.71.1/node_modules/@supabase/auth-js/dist/module/GoTrueAdminApi.d.ts
+./src/components/AdminLayout.tsx
+./src/pages/AdminCampaignsPage.tsx
+./src/pages/AdminCategoriesPage.tsx
+./src/pages/AdminCustomersPage.tsx
+./src/pages/AdminDashboard.tsx
+./src/pages/AdminLoginPage.tsx
+./src/pages/AdminProductsPage.tsx
+./src/pages/AdminSettingsPage.tsx
+$ ls -la src/pages/
+
+total 1253
+drwxrwxr-x  19 root root 282624 Aug 30 03:51 .
+drwxrwxr-x 105 root root 753664 Aug 30 03:51 ..
+-rw-rw-r--   1 root root   7215 Aug 30 03:51 AboutPage.tsx
+-rw-rw-r--   1 root root  16926 Aug 30 03:51 AdminCampaignsPage.tsx
+-rw-rw-r--   1 root root   7862 Aug 30 03:51 AdminCategoriesPage.tsx
+-rw-rw-r--   1 root root  26219 Aug 30 03:51 AdminCustomersPage.tsx
+-rw-rw-r--   1 root root  11956 Aug 30 03:51 AdminDashboard.tsx
+-rw-rw-r--   1 root root   4202 Aug 30 03:51 AdminLoginPage.tsx
+-rw-rw-r--   1 root root  41691 Aug 30 03:51 AdminProductsPage.tsx
+-rw-rw-r--   1 root root  15991 Aug 30 03:51 AdminSettingsPage.tsx
+-rw-rw-r--   1 root root  25338 Aug 30 03:51 CheckoutPage.tsx
+-rw-rw-r--   1 root root  14051 Aug 30 03:51 ContactPage.tsx
+-rw-rw-r--   1 root root  21448 Aug 30 03:51 HomePage.tsx
+-rw-rw-r--   1 root root    583 Aug 30 03:51 Index.tsx
+-rw-rw-r--   1 root root    921 Aug 30 03:51 NotFound.tsx
+-rw-rw-r--   1 root root   9303 Aug 30 03:51 PricingPage.tsx
+-rw-rw-r--   1 root root  15952 Aug 30 03:51 ProductDetailPage.tsx
+-rw-rw-r--   1 root root  11964 Sep 25 00:13 ProductsPage.tsx
+-rw-rw-r--   1 root root   9425 Sep 25 00:14 ThankYouPage.tsx

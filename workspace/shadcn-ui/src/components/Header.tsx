@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ShoppingCart, Menu, X, Search, User } from 'lucide-react';
+import { ShoppingCart, Menu, X, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useCart } from '@/hooks/useCart';
@@ -96,20 +96,7 @@ const Header = () => {
           </form>
 
           {/* Cart and Actions */}
-          <div className="flex items-center space-x-3">
-            {/* Login Button */}
-            <Link to="/admin/login">
-              <Button 
-                variant="outline" 
-                size="sm" 
-                className="flex items-center space-x-2 hover:bg-primary-accent-green hover:text-white transition-colors duration-200"
-              >
-                <User className="h-4 w-4" />
-                <span className="hidden sm:inline">Đăng nhập</span>
-              </Button>
-            </Link>
-
-            {/* Cart Button */}
+          <div className="flex items-center space-x-4">
             <Button 
               variant="outline" 
               size="sm" 
@@ -123,6 +110,12 @@ const Header = () => {
                 </span>
               )}
             </Button>
+
+            <Link to="/admin">
+              <Button variant="outline" size="sm" className="hidden md:inline-flex">
+                Admin
+              </Button>
+            </Link>
 
             {/* Mobile menu button */}
             <Button
@@ -182,12 +175,11 @@ const Header = () => {
                 Liên hệ
               </Link>
               <Link 
-                to="/admin/login" 
-                className="worksheet-link flex items-center space-x-2"
+                to="/admin" 
+                className="worksheet-link"
                 onClick={() => setIsMenuOpen(false)}
               >
-                <User className="h-4 w-4" />
-                <span>Đăng nhập Admin</span>
+                Admin
               </Link>
             </nav>
           </div>
