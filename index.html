@@ -1,25 +1,309 @@
 <!DOCTYPE html>
 <html lang="vi">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" href="https://i.postimg.cc/k5FjCFmp/X-a-ph-ng-kh-ng-c-ch.png" type="image/png">
-  <title>Worksheet - Tạo website chuyên nghiệp từ Google Sheet</title>
-  <meta name="description" content="Biến dữ liệu trong bảng tính thành một trang web bán hàng mạnh mẽ và dễ quản lý. Không cần biết code." />
-  <meta name="author" content="Worksheet" />
-
-  <meta property="og:title" content="Worksheet - Tạo website chuyên nghiệp từ Google Sheet" />
-  <meta property="og:description" content="Biến dữ liệu trong bảng tính thành một trang web bán hàng mạnh mẽ và dễ quản lý. Không cần biết code." />
-  <meta property="og:type" content="website" />
-  <meta property="og:image" content="https://i.postimg.cc/qR77ZVm5/Logo-x-a-ph-ng-to.png" />
-
-  <script type="module" crossorigin src="/assets/index-dEd-LrmU.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/index-BNvLGyx8.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Co.Lab Study Hub - Không Gian Học Tập & Làm Việc Hiện Đại</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Sửa lỗi giao diện Tin tức cho Trang chủ */
+        .news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px; }
+        .news-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: transform 0.3s; }
+        .news-card:hover { transform: translateY(-8px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .news-img { height: 200px; overflow: hidden; }
+        .news-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+        .news-card:hover .news-img img { transform: scale(1.05); }
+        .news-content { padding: 24px; }
+        .news-date { font-size: 13px; color: #8e47f4; font-weight: 600; margin-bottom: 8px; display: block; }
+        .news-title { font-size: 18px; color: #180161; margin-bottom: 12px; font-weight: 700; line-height: 1.4; }
+        .news-title a { color: inherit; text-decoration: none; }
+        .news-excerpt { font-size: 14px; color: #666; margin-bottom: 16px; }
+        .read-more { font-size: 14px; font-weight: 600; color: #8e47f4; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; }
+        .read-more:hover { color: #180161; }
+    </style>
 </head>
-
 <body>
-  <div id="root"></div>
-</body>
 
+   <header class="navbar navbar-solid">
+        <div class="container nav-container">
+            <div class="logo">
+                <a href="index.html" style="text-decoration: none;"><h1>Co.Lab<span class="dot">.</span></h1></a>
+            </div>
+            
+            <div class="menu-toggle" id="mobileMenuBtn">
+                <i class="ph ph-list"></i>
+            </div>
+
+            <nav class="nav-links" id="mainNav">
+                <a href="index.html" class="active">Trang chủ</a>
+                
+                <div class="dropdown">
+                    <a href="about.html">Về Co.Lab <i class="ph ph-caret-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="about.html">Giới thiệu chung</a>
+                        <a href="news.html">Tin tức & Bài viết</a>
+                        <a href="gallery.html">Thư viện hình ảnh</a> </div>
+                </div>
+
+                <div class="dropdown">
+                    <a href="rooms.html">Hệ thống phòng <i class="ph ph-caret-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="rooms.html?branch=Quận 1">CS1: Quận 1, TP.HCM</a>
+                        <a href="rooms.html?branch=Bình Thạnh">CS2: Bình Thạnh, TP.HCM</a>
+                        <a href="rooms.html?branch=Ba Đình">CS3: Ba Đình, Hà Nội</a>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <a href="services.html">Dịch vụ <i class="ph ph-caret-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="services.html#cho-ngoi">Chỗ ngồi cá nhân</a>
+                        <a href="services.html#phong-hop">Phòng họp & Thảo luận</a>
+                        <a href="services.html#su-kien">Không gian Sự kiện</a>
+                        <a href="services.html#studio">Studio & Quay TVC</a>
+                    </div>
+                </div>
+
+                <a href="pricing.html">Báo giá</a>
+                <a href="rooms.html" class="btn btn-primary btn-nav-book">Đặt phòng ngay</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container hero-content" data-aos="fade-up">
+            <h2 class="hero-title">Không Gian <br class="mobile-only">Lý Tưởng,<br> <span>Tối Ưu Hiệu Suất</span></h2>
+            <p class="hero-desc">Trải nghiệm môi trường học tập và làm việc chuyên nghiệp với thiết kế hiện đại, đầy đủ tiện nghi tại Co.Lab Study Hub.</p>
+            
+            <div class="booking-widget-pill" data-aos="fade-up" data-aos-delay="200">
+                <div class="widget-item">
+                    <i class="ph ph-map-pin"></i>
+                    <div class="input-group">
+                        <label>Chi nhánh</label>
+                        <select id="branchSelect">
+                            <option value="">Chọn chi nhánh</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="widget-divider"></div>
+
+                <div class="widget-item">
+                    <i class="ph ph-calendar-blank"></i>
+                    <div class="input-group">
+                        <label>Ngày đến</label>
+                        <input type="date" id="bookingDate">
+                    </div>
+                </div>
+
+                <div class="widget-divider"></div>
+
+                <div class="widget-item">
+                    <i class="ph ph-clock"></i>
+                    <div class="input-group">
+                        <label>Thời gian</label>
+                        <div class="time-inputs">
+                            <input type="time" id="startTime" value="08:00">
+                            <span>-</span>
+                            <input type="time" id="endTime" value="12:00">
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-search" id="btnSearchHome" onclick="document.getElementById('rooms').scrollIntoView({ behavior: 'smooth', block: 'start' });">Tìm phòng trống</button>
+            </div>
+        </div>
+        <div class="hero-blob"></div>
+    </section>
+
+    <section id="services" class="section-services" style="background-color: #ffffff; border-radius: 48px 48px 0 0; position: relative; z-index: 10; padding-top: 80px; box-shadow: 0 -10px 30px rgba(0,0,0,0.03); margin-top: -30px;" data-aos="fade-up">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Hệ Sinh Thái Không Gian</h2>
+                <p class="section-subtitle">Dù bạn cần một góc nhỏ yên tĩnh hay nguyên mặt sàn 140m2 cho ekip làm phim, Co.Lab đều có giải pháp hoàn hảo.</p>
+            </div>
+            
+            <div class="service-grid">
+                <a href="services.html#cho-ngoi" class="service-card" style="display:block; color:inherit;" data-aos="fade-up" data-aos-delay="100">
+                    <div class="service-icon"><i class="ph ph-user-focus"></i></div>
+                    <h3>Chỗ Ngồi Cá Nhân</h3>
+                    <p>Không gian yên tĩnh, ghế công thái học, lý tưởng để học tập và làm việc tập trung sâu.</p>
+                </a>
+                <a href="services.html#phong-hop" class="service-card" style="display:block; color:inherit;" data-aos="fade-up" data-aos-delay="200">
+                    <div class="service-icon"><i class="ph ph-users-three"></i></div>
+                    <h3>Phòng Họp & Làm Việc Nhóm</h3>
+                    <p>Đầy đủ máy chiếu, màn hình tương tác, bảng trắng. Không gian riêng tư, bảo mật.</p>
+                </a>
+                <a href="services.html#su-kien" class="service-card" style="display:block; color:inherit;" data-aos="fade-up" data-aos-delay="300">
+                    <div class="service-icon"><i class="ph ph-presentation-chart"></i></div>
+                    <h3>Không Gian Sự Kiện & Đào Tạo</h3>
+                    <p>Sức chứa linh hoạt, hệ thống âm thanh, ánh sáng hiện đại phục vụ workshop, hội thảo.</p>
+                </a>
+                <a href="services.html#studio" class="service-card" style="display:block; color:inherit;" data-aos="fade-up" data-aos-delay="400">
+                    <div class="service-icon"><i class="ph ph-video-camera"></i></div>
+                    <h3>Studio & Quay TVC</h3>
+                    <p>Trọn gói mặt sàn 140m2, thiết bị tân tiến, phù hợp cho ekip quay phim, chụp hình chuyên nghiệp.</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="rooms" class="section-rooms" style="background-color: var(--warm-bg);" data-aos="fade-up">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Không Gian Nổi Bật</h2>
+                <p class="section-subtitle">Khám phá các phòng làm việc, phòng họp được yêu thích nhất tại Co.Lab.</p>
+            </div>
+            
+            <div class="room-grid" id="roomGrid">
+                <div class="loading">
+                    <i class="ph ph-spinner-gap spinner"></i> Đang kết nối dữ liệu từ hệ thống...
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-partners" style="background-color: #ffffff;" data-aos="fade-up">
+        <div class="container">
+            <p class="partner-title">Đồng hành cùng +500 thương hiệu, doanh nghiệp và đoàn làm phim</p>
+            <div class="partner-marquee">
+                <div class="marquee-content">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg" alt="YouTube">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Stripe_Logo%2C_revised_2016.svg" alt="Stripe">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg" alt="YouTube">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Stripe_Logo%2C_revised_2016.svg" alt="Stripe">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-gallery" style="background-color: var(--warm-bg);" data-aos="fade-up">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Không Gian Thực Tế</h2>
+                <p class="section-subtitle">Góc nhìn chân thực từ các sự kiện nghìn khách, buổi quay TVC và không gian làm việc đẳng cấp tại Co.Lab.</p>
+            </div>
+            
+            <div class="bento-gallery">
+                <a href="gallery.html" class="bento-item item-large" style="display:block;">
+                    <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1000&q=80" alt="Event">
+                    <div class="bento-overlay"><span>Sự kiện công nghệ 500 khách</span></div>
+                </a>
+                <a href="gallery.html" class="bento-item" style="display:block;">
+                    <img src="https://images.unsplash.com/photo-1600508774634-4e11d34730e2?auto=format&fit=crop&w=600&q=80" alt="Studio">
+                    <div class="bento-overlay"><span>Quay TVC Quảng Cáo</span></div>
+                </a>
+                <a href="gallery.html" class="bento-item item-tall" style="display:block;">
+                    <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80" alt="Teamwork">
+                    <div class="bento-overlay"><span>Phòng Thảo Luận Ban Giám Đốc</span></div>
+                </a>
+                <a href="gallery.html" class="bento-item" style="display:block;">
+                    <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=600&q=80" alt="Workspace">
+                    <div class="bento-overlay"><span>Khu Vực Cá Nhân Yên Tĩnh</span></div>
+                </a>
+                <a href="gallery.html" class="bento-item item-wide" style="display:block;">
+                    <img src="https://images.unsplash.com/photo-1517502884422-41ea60d5b436?auto=format&fit=crop&w=800&q=80" alt="Meeting">
+                    <div class="bento-overlay"><span>Lớp Đào Tạo Kỹ Năng Mềm</span></div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="container" style="padding: 80px 24px;" data-aos="fade-up">
+        <div style="text-align: center; margin-bottom: 48px;">
+            <h2 style="font-size: 32px; color: #180161; font-weight: 800; margin-bottom: 12px;">Tin Tức & Sự Kiện</h2>
+            <p style="color: var(--text-light); font-size: 16px;">Cập nhật những thông tin và hoạt động nổi bật tại hệ sinh thái Co.Lab.</p>
+        </div>
+        
+        <div class="news-grid" id="homeNewsGrid">
+            <div style="grid-column: 1/-1; text-align: center; padding: 40px;">
+                <i class="ph ph-spinner-gap spinner" style="font-size: 32px; color: var(--primary-purple);"></i>
+                <p>Đang tải bài viết mới nhất...</p>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 48px;">
+            <a href="news.html" class="btn btn-primary" style="padding: 12px 32px; border-radius: 100px; font-weight: 600; display: inline-flex; align-items: center; gap: 8px;">
+                Xem tất cả bài viết <i class="ph ph-arrow-right"></i>
+            </a>
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div class="footer-col">
+                <div class="logo">
+                    <h1 style="color: white;">Co.Lab<span class="dot" style="color: var(--graphic-yellow);">.</span></h1>
+                </div>
+                <p class="footer-desc">Hệ sinh thái không gian làm việc, phòng họp, studio và tổ chức sự kiện đẳng cấp hàng đầu.</p>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/colabhanoi" target="_blank" title="Facebook"><i class="ph ph-facebook-logo"></i></a>
+                    <a href="#" title="Instagram"><i class="ph ph-instagram-logo"></i></a>
+                    <a href="#" title="TikTok"><i class="ph ph-tiktok-logo"></i></a>
+                    <a href="#" title="YouTube"><i class="ph ph-youtube-logo"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Liên Hệ</h3>
+                <ul class="contact-list">
+                    <li><i class="ph ph-phone"></i> <span><strong>Hotline:</strong> 090x.xxx.xxx</span></li>
+                    <li><i class="ph ph-envelope-simple"></i> <span><strong>Email:</strong> hello@colab.vn</span></li>
+                    <li><i class="ph ph-map-pin"></i> <span><strong>CS1:</strong> 123 Lê Lợi, Q.1, TP.HCM</span></li>
+                    <li><i class="ph ph-map-pin"></i> <span><strong>CS2:</strong> 456 Điện Biên Phủ, Q.Bình Thạnh, TP.HCM</span></li>
+                </ul>
+            </div>
+
+            <div class="footer-col footer-map">
+                <h3>Bản Đồ Chỉ Đường</h3>
+                <div class="map-wrapper">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.096814183571!2d105.82650051533202!3d21.028811885998316!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ab9bd9861ca1%3A0xe7887f7b72ca17a9!2zSMOgIE7hu5lp!5e0!3m2!1svi!2s!4v1680000000000!5m2!1svi!2s" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="container">
+                <p>© 2026 Co.Lab Study Hub. All rights reserved. Designed with ❤️</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="floating-contact-group">
+        <a href="tel:090xxxxxxx" class="float-btn btn-call" title="Gọi Hotline">
+            <i class="ph-fill ph-phone-call"></i>
+        </a>
+        <a href="https://zalo.me/090xxxxxxx" target="_blank" class="float-btn btn-zalo" title="Chat Zalo">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Icon_of_Zalo.svg" alt="Zalo">
+        </a>
+        <a href="https://m.me/colabhanoi" target="_blank" class="float-btn btn-mess" title="Chat Facebook">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/be/Facebook_Messenger_logo_2020.svg" alt="Messenger">
+        </a>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 100,
+        });
+    </script>
+    <script src="main.js"></script>
+</body>
 </html>
